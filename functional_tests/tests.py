@@ -27,6 +27,30 @@ class NewVisitorTest(LiveServerTestCase):
                 if time.time() - start_time > MAX_WAIT:
                     raise e
                 time.sleep(0.5)
+
+    def test_layout_and_styling(self):
+        # 张三访问首页
+        self.browser.get(self.live_server_url)
+        self.browser.set_window_size(1024,768)
+
+        # 他看到输入框居中显示
+        inputbox=self.browser.find_element(By.ID,'id_new_item')
+        self.assertAlmostEqual(
+            inputbox.location['x']+inputbox.size['width']/2,
+            512,
+            delta=10
+            )
+        
+        # 他新建了一个清单，看到输入框仍居中显示
+        inputbox.send_keys('testing')
+        inputbox.send_keys(Keys.ENTER)
+        self.wait_for_row_in_list_table('1:testing')
+        inputbox=self.browser.find_element(By.ID,'id_new_item')
+        self.assertAlmostEqual(
+            inputbox.location['x']+inputbox.size['width']/2,
+            512,
+            delta=10
+            )
     
     def test_can_start_a_list_and_retrieve_it_later(self):
 
@@ -106,8 +130,7 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertNotIn('Buy flowers',page_text)
         self.assertIn('Buy milk',page_text)
 
-        #两人很满意
-
+        #两人很满意        
 
         # 张三想知道这网站是否会记住他的清单
         # 网站生成了一个唯一的url
