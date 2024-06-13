@@ -48,7 +48,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
         # 他新建了一个清单，看到输入框仍居中显示
         inputbox.send_keys('testing')
         inputbox.send_keys(Keys.ENTER)
-        self.wait_for_row_in_list_table('1: testing')
+        self.wait_for_row_in_list_table('1:testing')
         inputbox=self.browser.find_element(By.ID,'id_new_item')
         self.assertAlmostEqual(
             inputbox.location['x']+inputbox.size['width']/2,
@@ -80,7 +80,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
         # 回车页面更新
         # 待办事项表格显示了"1: Buy flowers"
         inputbox.send_keys(Keys.ENTER)
-        self.wait_for_row_in_list_table('1: Buy flowers')
+        self.wait_for_row_in_list_table('1:Buy flowers')
         
 
         # 页面又显示了文本框，可以输其他待办事项
@@ -90,8 +90,8 @@ class NewVisitorTest(StaticLiveServerTestCase):
         inputbox.send_keys(Keys.ENTER)
 
         # 页面再次更新，现在有两个待办事项
-        self.wait_for_row_in_list_table('1: Buy flowers')
-        self.wait_for_row_in_list_table('2: Give a gift to Lisi')
+        self.wait_for_row_in_list_table('1:Buy flowers')
+        self.wait_for_row_in_list_table('2:Give a gift to Lisi')
 
     def test_multiple_users_can_start_lists_at_different_urls(self):
         # 张三新建一个待办事项清单
@@ -99,7 +99,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
         inputbox=self.browser.find_element(By.ID,'id_new_item')
         inputbox.send_keys('Buy flowers')
         inputbox.send_keys(Keys.ENTER)
-        self.wait_for_row_in_list_table('1: Buy flowers')
+        self.wait_for_row_in_list_table('1:Buy flowers')
 
         # 他注意到清单有一个唯一url
         zhangsan_list_url=self.browser.current_url
@@ -122,7 +122,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
         inputbox=self.browser.find_element(By.ID,'id_new_item')
         inputbox.send_keys('Buy milk')
         inputbox.send_keys(Keys.ENTER)
-        self.wait_for_row_in_list_table('1: Buy milk')
+        self.wait_for_row_in_list_table('1:Buy milk')
 
         # 王五获得了他的唯一url
         wangwu_list_url=self.browser.current_url
